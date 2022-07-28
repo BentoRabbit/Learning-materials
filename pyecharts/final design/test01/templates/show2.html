@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form action="/clinicaltrial/search/" method="post">
+    {% csrf_token %}
+    <label>search:</label><input type="text" name="title">
+    <label></label><input type="submit" value="search">
+
+</form>
+<div id="content">
+    <ul class="clearfix">
+        {% for user in users %}
+        <li>
+            <h1 class="h1">{{ user.title }}</h1>
+        </li>
+        {% endfor %}
+    </ul>
+</div>
+
+</body>
+</html>
+
+
+{#&emsp;&emsp;{{ user.phone }}#}

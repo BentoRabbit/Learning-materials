@@ -1,0 +1,350 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+/* 声明字体*/
+@font-face {
+  font-family: electronicFont;
+  src: url(../font/DS-DIGIT.TTF);
+}
+.tablebox {
+  overflow: hidden;
+  position: relative;
+}
+.tbl-header {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 999;
+}
+.tbl-body {
+  width: 100%;
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+.tablebox table {
+  width: 100%;
+}
+.tablebox table th,
+.tablebox table td {
+  font-size: 0.21rem;
+  color: #7ca6f4;
+  line-height: 0.5rem;
+  text-align: center;
+}
+.tablebox table tr th {
+  background-color: #001446;
+  cursor: pointer;
+}
+.tablebox table tr td {
+  background-color: transparent;
+}
+.tablebox table tr td span,
+.tablebox table tr td span {
+  font-size: 0.25rem;
+}
+body {
+  background: url(../images/bg.jpg) no-repeat top center;
+  background-size: 100% 100%;
+}
+header {
+  height: 1.5rem;
+  background: url(../images/t2.png) no-repeat;
+  background-size: 100% 100%;
+  display: flex;
+}
+header .header1 {
+  flex: 1;
+  width: 8rem;
+  background: url(../images/logo.png) no-repeat;
+}
+header .header2 {
+  flex: 1;
+  width: 8rem;
+  font-size: 0.6rem;
+  font-weight: 550;
+  color: #fff;
+  text-align: center;
+  line-height: 1rem;
+}
+header .header3 {
+  flex: 1;
+  width: 8rem;
+  text-align: right;
+  color: rgba(255, 255, 255, 0.7);
+  font-size: 0.3rem;
+  font-family: "electronicFont";
+}
+.mainbox {
+  flex-direction: row;
+}
+.mainbox #top {
+  flex: 3;
+  height: 8rem;
+  display: flex;
+}
+.mainbox #top #topLeft {
+  flex: 7;
+  width: 7rem;
+  flex-direction: row;
+}
+.mainbox #top #topLeft #warning {
+  flex: 1;
+  height: 4rem;
+}
+.mainbox #top #topLeft #warning #warning1 {
+  height: 4rem;
+  width: 7rem;
+}
+.mainbox #top #topLeft #connection {
+  flex: 1;
+  height: 4rem;
+  position: relative;
+}
+.mainbox #top #topLeft #connection .tablebox {
+  height: 3rem;
+  width: 6.6rem;
+  top: 0.8rem;
+  left: 0.2rem;
+}
+.mainbox #top #topMid {
+  flex: 10;
+  width: 10rem;
+}
+.mainbox #top #topMid #topMid1 {
+  height: 8rem;
+  width: 10rem;
+  position: absolute;
+}
+.mainbox #top #topMid #topMid1 #topMid11 {
+  height: 7.6rem;
+  width: 9.5rem;
+  margin-top: 0.2rem;
+  margin-left: 0.2rem;
+}
+.mainbox #top #topMid #topMid1 #topMid12 {
+  position: absolute;
+  height: 1rem;
+  width: 2rem;
+  bottom: 0.5rem;
+  left: 0.8rem;
+}
+.mainbox #top #topMid #topMid1 #topMid12 #topMid121 {
+  position: absolute;
+  height: 0.8rem;
+  width: 1.8rem;
+  left: 0.1rem;
+  top: 0.1rem;
+  font-size: 0.2rem;
+  font-weight: 800;
+  color: #fff;
+}
+.mainbox #top #topMid #topMid1 #topMid13 {
+  position: absolute;
+  height: 1rem;
+  width: 2rem;
+  bottom: 3.5rem;
+  left: 1.2rem;
+}
+.mainbox #top #topMid #topMid1 #topMid13 #topMid131 {
+  position: absolute;
+  height: 0.8rem;
+  width: 1.8rem;
+  left: 0.1rem;
+  top: 0.1rem;
+  font-size: 0.2rem;
+  font-weight: 800;
+  color: #fff;
+}
+.mainbox #top #topMid #topMid1 #topMid14 {
+  position: absolute;
+  height: 1rem;
+  width: 2rem;
+  bottom: 4rem;
+  right: 0.6rem;
+}
+.mainbox #top #topMid #topMid1 #topMid14 #topMid141 {
+  position: absolute;
+  height: 0.8rem;
+  width: 1.8rem;
+  left: 0.1rem;
+  top: 0.1rem;
+  font-size: 0.2rem;
+  font-weight: 800;
+  color: #fff;
+}
+.mainbox #top #topRight {
+  flex: 7;
+  width: 7rem;
+  flex-direction: row;
+}
+.mainbox #top #topRight #database {
+  flex: 1;
+  height: 4rem;
+}
+.mainbox #top #topRight #database #database1 {
+  height: 4rem;
+  width: 7rem;
+  position: absolute;
+}
+.mainbox #top #topRight #database #database1 #database2 {
+  height: 3rem;
+  width: 6.5rem;
+  margin-left: 0.2rem;
+  margin-top: 0.8rem;
+}
+.mainbox #top #topRight #archive {
+  flex: 1;
+  height: 4rem;
+}
+.mainbox #top #topRight #archive #archive1 {
+  height: 4rem;
+  width: 7rem;
+  position: absolute;
+}
+.mainbox #top #topRight #archive #archive1 #archive2 {
+  height: 3rem;
+  width: 6.5rem;
+  margin-left: 0.2rem;
+  margin-top: 0.8rem;
+}
+.mainbox #down {
+  flex: 1;
+  height: 4rem;
+  display: flex;
+}
+.mainbox #down #down1 {
+  flex: 1;
+  width: 6rem;
+}
+.mainbox #down #down1 #down11 {
+  height: 4rem;
+  width: 6rem;
+  position: absolute;
+}
+.mainbox #down #down1 #down11 #down111 {
+  height: 3rem;
+  width: 5.5rem;
+  margin-left: 0.2rem;
+  margin-top: 0.8rem;
+  flex-direction: row;
+}
+.mainbox #down #down1 #down11 #down111 #down1111 {
+  flex: 1;
+  height: 1.5rem;
+  display: flex;
+}
+.mainbox #down #down1 #down11 #down111 #down1111 #down11111 {
+  flex: 1;
+  width: 2.75rem;
+}
+.mainbox #down #down1 #down11 #down111 #down1111 #down11112 {
+  flex: 1;
+  width: 2.75rem;
+}
+.mainbox #down #down1 #down11 #down111 #down1112 {
+  flex: 1;
+  height: 1.5rem;
+}
+.mainbox #down #down2 {
+  flex: 1;
+  width: 6rem;
+}
+.mainbox #down #down2 #down22 {
+  height: 4rem;
+  width: 6rem;
+  position: absolute;
+}
+.mainbox #down #down2 #down22 #down222 {
+  height: 3rem;
+  width: 5.5rem;
+  margin-left: 0.2rem;
+  margin-top: 0.8rem;
+  flex-direction: row;
+}
+.mainbox #down #down2 #down22 #down222 #down2221 {
+  flex: 1;
+  height: 1.5rem;
+  display: flex;
+}
+.mainbox #down #down2 #down22 #down222 #down2221 #down22211 {
+  flex: 1;
+  width: 2.75rem;
+}
+.mainbox #down #down2 #down22 #down222 #down2221 #down22212 {
+  flex: 1;
+  width: 2.75rem;
+}
+.mainbox #down #down2 #down22 #down222 #down2222 {
+  flex: 1;
+  height: 1.5rem;
+}
+.mainbox #down #down3 {
+  flex: 1;
+  width: 6rem;
+}
+.mainbox #down #down3 #down33 {
+  height: 4rem;
+  width: 6rem;
+  position: absolute;
+}
+.mainbox #down #down3 #down33 #down333 {
+  height: 3rem;
+  width: 5.5rem;
+  margin-left: 0.2rem;
+  margin-top: 0.8rem;
+  flex-direction: row;
+}
+.mainbox #down #down3 #down33 #down333 #down3331 {
+  flex: 1;
+  height: 1.5rem;
+  display: flex;
+}
+.mainbox #down #down3 #down33 #down333 #down3331 #down33311 {
+  flex: 1;
+  width: 2.75rem;
+}
+.mainbox #down #down3 #down33 #down333 #down3331 #down33312 {
+  flex: 1;
+  width: 2.75rem;
+}
+.mainbox #down #down3 #down33 #down333 #down3332 {
+  flex: 1;
+  height: 1.5rem;
+}
+.mainbox #down #down4 {
+  flex: 1;
+  width: 6rem;
+}
+.mainbox #down #down4 #down44 {
+  height: 4rem;
+  width: 6rem;
+  position: absolute;
+}
+.mainbox #down #down4 #down44 #down444 {
+  height: 3rem;
+  width: 5.5rem;
+  margin-left: 0.2rem;
+  margin-top: 0.8rem;
+  flex-direction: row;
+}
+.mainbox #down #down4 #down44 #down444 #down4441 {
+  flex: 1;
+  height: 1.5rem;
+  display: flex;
+}
+.mainbox #down #down4 #down44 #down444 #down4441 #down44411 {
+  flex: 1;
+  width: 2.75rem;
+}
+.mainbox #down #down4 #down44 #down444 #down4441 #down44412 {
+  flex: 1;
+  width: 2.75rem;
+}
+.mainbox #down #down4 #down44 #down444 #down4442 {
+  flex: 1;
+  height: 1.5rem;
+}

@@ -1,0 +1,121 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="renderer" content="webkit" />
+    <title>index</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}"/>
+    <script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+    <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+    <script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts.min.js"></script>
+{#    <link href="/static/css/styles.css" rel="stylesheet">#}
+
+</head>
+<body>
+
+<!-- header1-->
+		<div class="header1">
+            <div class="main">
+                <div class="left" style="left:200px; top:20px">
+                    <font size="6">我国临床试验情况分析系统</font>
+                </div>
+<!-- 搜索栏 -->
+<div class="container">
+    <form action="/clinicaltrial/show" class="parent">
+        <input type="text" name="title" placeholder="请输入...">
+        <input type="submit" value="&emsp;搜&emsp;索&emsp;">
+    </form>
+
+</div>
+        <!-- 注册/登录 -->
+                <div class="right" style="right: 200px; top: 20px">
+                    <font size="4"><a href="/clinicaltrial/register">注册</a> | <a href="/clinicaltrial/data">可视化大屏</a></font>
+                </div>
+		    </div>
+        </div>
+
+
+<div class="ditu main">
+    <div class="left">
+        <ul class="list">
+            <li>
+            <div class="tongji">
+                <h2>2018&emsp;&emsp;&emsp;{{ a }}</h2>
+                <h2>2019&emsp;&emsp;&emsp;{{ b }}</h2>
+                <h2>2020&emsp;&emsp;&emsp;{{ c }}</h2>
+                <h2>2021&emsp;&emsp;&emsp;{{ d }}</h2>
+                <div class="bar" id="bar" style="width: 200%; height: 350%;"></div>
+                <script>
+                var chart = echarts.init(document.getElementById('bar'), 'white', {renderer: 'canvas'});
+                $(
+                    function () {
+                        fetchData(chart);
+                        setInterval(fetchData, 100);
+                    }
+                );
+
+                function fetchData() {
+                    $.ajax({
+                    type: "GET",
+                    url: "http://127.0.0.1:8000/clinicaltrial/bar",
+                    dataType: 'json',
+                    success: function (result) {
+                    chart.setOption(result.data);
+                        }
+                    });
+                }
+            </script>
+
+
+            </div>
+
+                <div class="text">
+                    {% for clinialtrial in clinialtrials %}
+                    <a href="#" class="title">{{clinialtrial.title}}</a>
+                    <p>注册年份:{{ clinialtrial.start_year }}&emsp;&emsp;城市:{{ clinialtrial.city1 }},{{ clinialtrial.state1 }},{{ clinialtrial.country1 }}</p>
+                    <p>成员:{{ clinialtrial.investigators_contacts }}</p>
+                    <a href="{{ clinialtrial.dimensions_url }}">点击查看详情页</a>
+                    <p class="desc">{{clinialtrial.abstract}}</p>
+                    <br>
+                    {% endfor %}
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+
+
+
+{#  show#}
+{#2018-year:{{ nums }}#}
+
+{#<div class="main">#}
+{##}
+{#{% for clinialtrial in clinialtrials %}#}
+{#<br>#}
+{#    {{clinialtrial.title}}<br>#}
+{#{{clinialtrial.start_year}}:{{clinialtrial.completion_year}}#}
+{#<br>#}
+{#{{clinicaltrial.trial_id}}#}
+{##}
+{#{% endfor %}#}
+{##}
+{#</div>#}
+
+
+
+{#<div id="content" >#}
+{#    {% for clinialtrial in clinialtrials %}#}
+{##}
+{#        <li>#}
+{#            <h1 class="h1">{{clinialtrial.title}}</h1>#}
+{#            <a href="{{clinicaltrial.dimensions_url}}">详情页</a>#}
+{#            {{clinialtrial.start_year}}:{{clinialtrial.completion_year}}#}
+{#        </li>#}
+{#    {% endfor %}#}
+{#</div>#}
+</body>
+</html>

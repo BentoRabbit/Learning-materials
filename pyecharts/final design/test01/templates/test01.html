@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>我国临床试验研究情况</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- jQuery UI -->
+    <link href="https://code.jquery.com/ui/1.10.3/themes/redmond/jquery-ui.css" rel="stylesheet" media="screen">
+    <!-- Bootstrap -->
+    <link href="/static/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <!-- styles -->
+    <link href="/static/css/style.css" rel="stylesheet">
+
+</head>
+<body>
+<!-- header1-->
+		<div class="header1">
+            <div class="main">
+                <div class="left" style="left:200px; top:20px">
+                    <font size="6">我国临床试验情况分析系统</font>
+                </div>
+<!-- 搜索栏 -->
+<div class="container">{% csrf_token %}
+    <form  class="parent" method="post">
+
+        <input type="text" name="clinialtrial" placeholder="请输入...">
+        <input type="submit" value="&emsp;搜&emsp;索&emsp;">
+    </form>
+</div>
+        <!-- 注册/登录 -->
+                <div class="right" style="right: 200px; top: 20px">
+                    <font size="4"><a href="/clinicaltrial/data">可视化大屏</a></font>
+                </div>
+		    </div>
+        </div>
+<div class="ditu main">
+    <div class="left">
+        <ul class="list">
+            <li>
+            <div class="tongji">
+<div class="page-content">
+    <div class="row">
+        <div class="col-md-2">
+            <div class="sidebar content-box" style="display: block;">
+                <ul class="nav">
+                    <!-- Main menu -->
+                    <li class="submenu">
+                        <a href="#">
+                            <i class="glyphicon glyphicon-list"></i> 我国临床试验注册数量
+                            <span class="caret pull-right"></span>
+                        </a>
+                        <!-- Sub menu -->
+                        <ul>
+                            <li class="current"><i class="glyphicon glyphicon-minus"></i> 2018&emsp;&emsp;&emsp;{{ a }}</li>
+                            <li><i class="glyphicon glyphicon-record"></i> 2019&emsp;&emsp;&emsp;{{ b }}</li>
+                            <li><i class="glyphicon glyphicon-pencil"></i> 2020&emsp;&emsp;&emsp;{{ c }}</li>
+                            <li><i class="glyphicon glyphicon-pencil"></i> 2021&emsp;&emsp;&emsp;{{ d }}</li>
+                            <li><a href="/clinicaltrial/bar_toolbox"><i class="glyphicon glyphicon-record"></i>可视化展示</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="#">
+                            <i class="glyphicon glyphicon-list"></i> For Anzsrc Data
+                            <span class="caret pull-right"></span>
+                        </a>
+                        <!-- Sub menu -->
+                        <ul>
+                            {% for fad in fads %}
+                            <li ><i class="glyphicon glyphicon-list"></i>{{ fad.no }}&emsp;&emsp;{{ fad.quantity }}</li>
+                            {% endfor %}
+                            <li><a href="/clinicaltrial/pie_show"><i class="glyphicon glyphicon-record"></i>可视化展示</a></li>
+                        </ul>
+                    </li>
+                                    <li class="submenu">
+                        <a href="#">
+                            <i class="glyphicon glyphicon-list"></i> 临床试验阶段
+                            <span class="caret pull-right"></span>
+                        </a>
+                        <!-- Sub menu -->
+                        <ul>
+                            <li ><i class="glyphicon glyphicon-list"></i>Phase 0&emsp;&emsp;{{ phase0 }}</li>
+                            <li ><i class="glyphicon glyphicon-list"></i>Phase 1&emsp;&emsp;{{ phase1 }}</li>
+                            <li ><i class="glyphicon glyphicon-list"></i>Phase 2&emsp;&emsp;{{ phase2 }}</li>
+                            <li ><i class="glyphicon glyphicon-list"></i>Phase 3&emsp;&emsp;{{ phase3 }}</li>
+                            <li ><i class="glyphicon glyphicon-list"></i>Phase 4&emsp;&emsp;{{ phase4 }}</li>
+                            <li ><i class="glyphicon glyphicon-list"></i>N/A&emsp;&emsp;{{ na }}</li>
+                            <li><a href="/clinicaltrial/phase"><i class="glyphicon glyphicon-record"></i>可视化展示</a></li>
+                        </ul>
+                    </li>
+                    <li class="submenu">
+                        <a href="#">
+                            <i class="glyphicon glyphicon-list"></i> 地区
+                            <span class="caret pull-right"></span>
+                        </a>
+                        <!-- Sub menu -->
+                        <ul>
+                            {% for state in states %}
+                            <li ><i class="glyphicon glyphicon-list"></i>{{ state.state }}&emsp;&emsp;{{ state.state_count }}</li>
+                            {% endfor %}
+                            <li><a href="/clinicaltrial/city"><i class="glyphicon glyphicon-pencil"></i>可视化显示</a></li>
+                        </ul>
+                    </li>
+
+                    <li class="submenu">
+                        <a href="#">
+                            <i class="glyphicon glyphicon-list"></i> 设置
+                            <span class="caret pull-right"></span>
+                        </a>
+                        <!-- Sub menu -->
+                        <ul>
+                            <li><a href="/clinicaltrial/show_add">添加新的试验</a></li>
+                            <li><a href="/clinicaltrial/show_edit">修改试验信息</a></li>
+                            <li><a href="/clinicaltrial/edit">修改个人信息</a></li>
+                            <li><a href="/clinicaltrial/register">注册</a></li>
+                            <li><a href="/clinicaltrial">Login out</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </div>
+</div></div>
+        <div class="text">
+        <ul class="clearfix">
+                    {% for clinialtrial in clinialtrials %}
+                    <a href="#" class="title">{{clinialtrial.title}}</a>
+                        <p><font size="4">注册年份:{{ clinialtrial.start_year }}&emsp;&emsp;城市:{{ clinialtrial.city1 }},{{ clinialtrial.state1 }},{{ clinialtrial.country1 }}</font></p>
+                        <p><font size="4">成员:{{ clinialtrial.investigators_contacts }}&emsp;&emsp;阶段：{{ clinialtrial.phase }}</font></p>
+                        <font size="4"><a href="{{ clinialtrial.dimensions_url }}">点击查看详情页</a></font>
+                        <p class="desc"><font size="4">{{clinialtrial.abstract}}</font></p>
+                    <br>
+                    {% endfor %}
+        </ul>
+                </div>
+            </li>
+        </ul>
+    </div>
+</div>
+
+
+
+<link href="/static/vendors/datatables/dataTables.bootstrap.css" rel="stylesheet" media="screen">
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="https://code.jquery.com/jquery.js"></script>
+<!-- jQuery UI -->
+<script src="https://code.jquery.com/ui/1.10.3/jquery-ui.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="/static/bootstrap/js/bootstrap.min.js"></script>
+<script src="/static/vendors/datatables/js/jquery.dataTables.min.js"></script>
+<script src="/static/vendors/datatables/dataTables.bootstrap.js"></script>
+<script src="/static/js/custom.js"></script>
+</body>
+</html>

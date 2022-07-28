@@ -1,0 +1,122 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>我国临床试验研究情况可视化大屏</title>
+    <link rel="stylesheet" type="text/css" href="{% static 'index.css' %}"/>
+</head>
+
+<body>
+    <div id="head">
+        <div id="logo"></div>
+        <div id="title">我国临床试验研究情况可视化大屏</div>
+        <div id="time">
+            <div id="time1"></div>
+        </div>
+    </div>
+    <div id="mainbox">
+        <div id="left">
+            <div class="box left1">
+                <div class="word left11">财务管理系统RAC(FSSC)</div>
+                <div class="picture left12"></div>
+            </div>
+            <div class="box left2">
+                <div class="word left21">地产ERP系统(MYERP)</div>
+                <div class="picture left22"></div>
+            </div>
+
+        </div>
+        <div id="mid">
+            <div id="midTop">
+                <div id="midTop1">
+                    <div id="midTop11">地图</div>
+                </div>
+                <div id="midTop2">
+                    <div id="map1"></div>
+                    <!-- <div id="map2"></div>
+                    <div id="map3"></div> -->
+                    <div id="map"></div>
+                </div>
+            </div>
+
+        </div>
+        <div id="right">
+            <div class="box right1">
+                <div class="word right11">流程中心(BPM)</div>
+                <div class="picture right12"></div>
+            </div>
+            <div class="box right2">
+                <div class="word right21">计划系统(PLAN)</div>
+                <div class="picture right22"></div>
+            </div>
+        </div>
+    </div>
+
+    <script src="js/flexible.js"></script>
+    <script src="js/echarts.min.js"></script>
+
+    <!-- 先引入jquery -->
+    <script src="js/jquery.js"></script>
+    <script src="js/index.js"></script>
+</body>
+
+<script>
+    function tick() {
+        var hours, minutes, seconds, xfile;
+        var intHours, intMinutes, intSeconds;
+        var today, theday;
+        today = new Date();
+
+        function initArray() {
+            this.length = initArray.arguments.length
+            for (var i = 0; i < this.length; i++)
+                this[i + 1] = initArray.arguments[i]
+        }
+        var d = new initArray(
+            "星期日",
+            "星期一",
+            "星期二",
+            "星期三",
+            "星期四",
+            "星期五",
+            "星期六");
+        theday = today.getFullYear() + "年" + [today.getMonth() + 1] + "月" + today.getDate() + "日" + "&nbsp;" + "&nbsp;" + "&nbsp;" + "&nbsp;" + d[today.getDay() + 1];
+        intHours = today.getHours();
+        intMinutes = today.getMinutes();
+        intSeconds = today.getSeconds();
+        if (intHours == 0) {
+            hours = "12:";
+            xfile = "午夜";
+        } else if (intHours < 12) {
+            hours = intHours + ":";
+            xfile = "上午";
+        } else if (intHours == 12) {
+            hours = "12:";
+            xfile = "正午";
+        } else {
+            intHours = intHours - 12
+            hours = intHours + ":";
+            xfile = "下午";
+        }
+        if (intMinutes < 10) {
+            minutes = "0" + intMinutes + ":";
+        } else {
+            minutes = intMinutes + ":";
+        }
+        if (intSeconds < 10) {
+            seconds = "0" + intSeconds + " ";
+        } else {
+            seconds = intSeconds + " ";
+        }
+        timeString = theday + xfile + hours + minutes + seconds;
+        time1.innerHTML = timeString;
+        window.setTimeout("tick();", 100);
+    }
+    window.onload = tick;
+</script>
+
+</html>

@@ -1,0 +1,465 @@
+<!DOCTYPE html>
+<html lang="en-us"><head>
+<title>Add clinicaltrial</title>
+<link rel="stylesheet" type="text/css" href="/static/admin/css/base.css">
+
+  <link rel="stylesheet" type="text/css" href="/static/admin/css/nav_sidebar.css">
+  <script src="/static/admin/js/nav_sidebar.js" defer=""></script>
+
+<link rel="stylesheet" type="text/css" href="/static/admin/css/forms.css">
+
+
+<script src="/admin/jsi18n/"></script>
+<script src="/static/admin/js/vendor/jquery/jquery.js"></script>
+<script src="/static/admin/js/jquery.init.js"></script>
+<script src="/static/admin/js/core.js"></script>
+<script src="/static/admin/js/admin/RelatedObjectLookups.js"></script>
+<script src="/static/admin/js/actions.js"></script>
+<script src="/static/admin/js/urlify.js"></script>
+<script src="/static/admin/js/prepopulate.js"></script>
+<script src="/static/admin/js/vendor/xregexp/xregexp.js"></script>
+
+
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1.0, maximum-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="/static/admin/css/responsive.css">
+
+
+<meta name="robots" content="NONE,NOARCHIVE">
+</head>
+
+
+<body class=" app-clinicaltrial model-clinicaltrial change-form" data-admin-utc-offset="0">
+
+<!-- Container -->
+<div id="container">
+
+
+    <!-- Header -->
+    <div id="header">
+        <div id="branding">
+
+<h1 id="site-name"><a href="/admin/">添加新的试验</a></h1>
+
+        </div>
+
+
+        <div id="user-tools">
+
+                Welcome/
+
+                <a href="/admin/logout/">Log out</a>
+
+        </div>
+
+
+
+    </div>
+    <!-- END Header -->
+
+
+
+    <div class="main shifted" id="main">
+
+
+
+<button class="sticky toggle-nav-sidebar" id="toggle-nav-sidebar" aria-label="Toggle navigation"></button>
+<nav class="sticky" id="nav-sidebar">
+
+
+
+
+
+    <div class="app-clinicaltrial module current-app">
+      <table>
+        <caption>
+          <a href="/admin/clinicaltrial/" class="section" title="Models in the Clinicaltrial application">Clinicaltrial</a>
+        </caption>
+
+          <tbody><tr class="model-clinicaltrial current-model">
+
+              <th scope="row"><a href="/admin/clinicaltrial/clinicaltrial/" aria-current="page">Clinicaltrials</a></th>
+
+
+
+              <td><a href="/admin/clinicaltrial/clinicaltrial/add/" class="addlink">Add</a></td>
+
+
+
+          </tr>
+
+      </tbody></table>
+    </div>
+
+
+
+</nav>
+
+
+
+      <div class="content">
+
+
+
+        <!-- Content -->
+        <div id="content" class="colM">
+
+          <h1>Add clinicaltrial</h1>
+          <div id="content-main">
+
+
+
+<form method="post" id="clinicaltrial_form" novalidate=""><input type="hidden" name="csrfmiddlewaretoken" value="bXZoLOPYAcZAMKLtjWCFZoz0HzF2iioL4QMnYhL2VjtXX8ciQa807jMyVVrmbizM">
+<div>
+
+
+
+
+
+
+
+  <fieldset class="module aligned ">
+
+
+
+        <div class="form-row field-trial_id">
+
+
+                <div>
+
+
+                        <label class="required" for="id_trial_id">Trial id:</label>
+
+                            <input type="text" name="trial_id" class="vTextField" maxlength="45" required="" id="id_trial_id">
+
+
+
+                </div>
+
+        </div>
+
+        <div class="form-row field-title">
+
+
+                <div>
+
+
+                        <label for="id_title">Title:</label>
+
+                            <input type="text" name="title" class="vTextField" maxlength="500" id="id_title">
+
+
+
+                </div>
+
+        </div>
+
+        <div class="form-row field-brief_title">
+
+
+                <div>
+
+
+                        <label for="id_brief_title">Brief title:</label>
+
+                            <input type="text" name="brief_title" class="vTextField" maxlength="500" id="id_brief_title">
+
+
+
+                </div>
+
+        </div>
+
+        <div class="form-row field-acronym">
+
+
+                <div>
+
+
+                        <label for="id_acronym">Acronym:</label>
+
+                            <input type="text" name="acronym" class="vTextField" maxlength="500" id="id_acronym">
+
+
+
+                </div>
+
+        </div>
+
+        <div class="form-row field-abstract">
+
+
+                <div>
+
+
+                        <label for="id_abstract">Abstract:</label>
+
+                            <input type="text" name="abstract" class="vTextField" maxlength="1000" id="id_abstract">
+
+
+
+                </div>
+
+        </div>
+
+        <div class="form-row field-detailed_description">
+
+
+                <div>
+
+
+                        <label for="id_detailed_description">Detailed description:</label>
+
+                            <input type="text" name="detailed_description" class="vTextField" maxlength="1500" id="id_detailed_description">
+
+
+
+                </div>
+
+        </div>
+
+        <div class="form-row field-start_year">
+
+
+                <div>
+
+
+                        <label for="id_start_year">Start year:</label>
+
+                            <input type="number" name="start_year" class="vIntegerField" id="id_start_year">
+
+
+
+                </div>
+
+        </div>
+
+
+        <div class="form-row field-phase">
+
+
+                <div>
+
+
+                        <label for="id_phase">Phase:</label>
+
+                            <input type="text" name="phase" class="vTextField" maxlength="45" id="id_phase">
+
+
+
+                </div>
+
+        </div>
+
+
+        <div class="form-row field-gender">
+
+
+                <div>
+
+
+                        <label for="id_gender">Gender:</label>
+
+                            <input type="text" name="gender" class="vTextField" maxlength="30" id="id_gender">
+
+
+
+                </div>
+
+        </div>
+
+        <div class="form-row field-registry">
+
+
+                <div>
+
+
+                        <label for="id_registry">Registry:</label>
+
+                            <input type="text" name="registry" class="vTextField" maxlength="30" id="id_registry">
+
+
+
+                </div>
+
+        </div>
+
+        <div class="form-row field-investigators_contacts">
+
+
+                <div>
+
+
+                        <label for="id_investigators_contacts">Investigators contacts:</label>
+
+                            <input type="text" name="investigators_contacts" class="vTextField" maxlength="500" id="id_investigators_contacts">
+
+
+
+                </div>
+
+        </div>
+
+        <div class="form-row field-dimensions_url">
+
+
+                <div>
+
+
+                        <label for="id_dimensions_url">Dimensions url:</label>
+
+                            <input type="text" name="dimensions_url" class="vTextField" maxlength="100" id="id_dimensions_url">
+
+
+
+                </div>
+
+        </div>
+
+        <div class="form-row field-for_anzsrc_categories">
+
+
+                <div>
+
+
+                        <label for="id_for_anzsrc_categories">For anzsrc categories:</label>
+
+                            <input type="text" name="for_anzsrc_categories" class="vTextField" maxlength="500" id="id_for_anzsrc_categories">
+
+
+
+                </div>
+
+        </div>
+
+        <div class="form-row field-rcdc_categories">
+
+
+                <div>
+
+
+                        <label for="id_rcdc_categories">Rcdc categories:</label>
+
+                            <input type="text" name="rcdc_categories" class="vTextField" maxlength="500" id="id_rcdc_categories">
+
+
+
+                </div>
+
+        </div>
+
+        <div class="form-row field-hrcs_hc_categories">
+
+
+                <div>
+
+
+                        <label for="id_hrcs_hc_categories">Hrcs hc categories:</label>
+
+                            <input type="text" name="hrcs_hc_categories" class="vTextField" maxlength="500" id="id_hrcs_hc_categories">
+
+
+
+                </div>
+
+        </div>
+
+
+        <div class="form-row field-city1">
+
+
+                <div>
+
+
+                        <label for="id_city1">City1:</label>
+
+                            <input type="text" name="city1" class="vTextField" maxlength="45" id="id_city1">
+
+
+
+                </div>
+
+        </div>
+
+
+        <div class="form-row field-state1">
+
+
+                <div>
+
+
+                        <label for="id_state1">State1:</label>
+
+                            <input type="text" name="state1" class="vTextField" maxlength="45" id="id_state1">
+
+
+
+                </div>
+
+        </div>
+
+
+        <div class="form-row field-country1">
+
+
+                <div>
+
+
+                        <label for="id_country1">Country1:</label>
+
+                            <input type="text" name="country1" class="vTextField" maxlength="45" id="id_country1">
+
+
+
+                </div>
+
+        </div>
+
+
+
+</fieldset>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="submit-row">
+
+<input type="submit" value="Save" class="default" name="_save">
+
+</div>
+
+
+
+    <script id="django-admin-form-add-constants" src="/static/admin/js/change_form.js" data-model-name="clinicaltrial" async="">
+    </script>
+
+
+
+
+<script id="django-admin-prepopulated-fields-constants" src="/static/admin/js/prepopulate_init.js" data-prepopulated-fields="[]">
+</script>
+
+
+</div>
+</form></div>
+
+
+          <br class="clear">
+        </div>
+        <!-- END Content -->
+        <div id="footer"></div>
+      </div>
+    </div>
+</div>
+<!-- END Container -->
+
+
+</body></html>

@@ -1,0 +1,64 @@
+{% load static %}
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<meta name="renderer" content="webkit" />
+		<title>登陆</title>
+        <link rel="stylesheet" type="text/css" href="{% static 'style.css' %}"/>
+        <script src="https://cdn.bootcss.com/jquery/3.0.0/jquery.min.js"></script>
+        <script src="https://cdn.staticfile.org/echarts/4.3.0/echarts.min.js"></script>
+        <script type="text/javascript" src="https://assets.pyecharts.org/assets/echarts.min.js"></script>
+
+	</head>
+	<body>
+		
+<!-- header1-->
+		<div class="header1">
+            <div class="main">
+                <div class="left" style="left:200px; top:20px">
+                    <font size="6">我国临床试验分析系统-登入</font>
+                </div></div></div>
+
+		
+{#		<!--轮播图-->#}
+{#		<div class="main">#}
+{#			<div class="slide-wrap">#}
+{#			#}
+{#				<div class="slide-content">#}
+{#					<a href="#"><div class="slide-item" style="background: url(images/banner1.png) no-repeat center center;"></div></a>#}
+{#					<a href="#"><div class="slide-item" style="display: none; background: url(images/banner2.jpg) no-repeat center center;"></div></a>#}
+{#					<a href="#"><div class="slide-item" style="display: none; background: url(images/banner3.jpg) no-repeat center center;"></div></a>#}
+{#				</div>#}
+{#				#}
+{#				<div id="pagination">#}
+{#				</div>#}
+{#				#}
+{#			</div>#}
+{#		</div>#}
+		
+		<!--登录-->
+<div class="register main">
+       <form action="/clinicaltrial/login/" method="post">
+        {% csrf_token %}
+
+			<div class="form-item">
+				<span>用户名：</span><input type="text" id="username" name="username"/>
+			</div>
+
+            <div class="form-item">
+				<span>密码：</span><input type="password" id="password" name="password" />
+			</div>
+
+            <div class="form-item">
+                <button id="register-button">登&emsp;入</button>
+{#				<input type="submit" id="register-button" value="登&emsp;录">#}
+			</div>
+
+
+
+    </form>
+</div>
+
+	</body>
+</html>

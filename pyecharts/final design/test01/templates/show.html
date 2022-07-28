@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>查询</title>
+</head>
+<body>
+    <from ation="/clinicaltrial/show/" method="post">
+        {% csrf_token %}
+            <label>请输入搜索内容:</label><input type="text" name="title">
+            <label></label>
+    </from>
+
+    <div id="content">
+            <ul class="clearfix">
+                {% for data in datas %}
+            <li>
+                <h1 class="h1">{{ data.title }}</h1>
+            </li>
+                {% endfor %}
+        </ul>
+    </div>
+</body>
+</html>

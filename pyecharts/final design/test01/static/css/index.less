@@ -1,0 +1,357 @@
+//css初始化
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    // overflow: hidden;//这个是防止页面下端滚动条滚动的
+  }
+  /* 声明字体*/
+  @font-face {
+    font-family: electronicFont;
+    src: url(../font/DS-DIGIT.TTF);
+  }
+  // 轮播报表
+  .tablebox {
+    overflow: hidden;
+    position: relative;
+  }
+  .tbl-header {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 999;
+  }
+  .tbl-body {
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
+  .tablebox table {
+    width: 100%;
+  }
+  .tablebox table th,
+  .tablebox table td {
+    font-size: 0.21rem;
+    color: #7ca6f4;
+    line-height: 0.5rem;
+    text-align: center;
+  }
+  .tablebox table tr th {
+    background-color: #001446;
+    cursor: pointer;
+  }
+  .tablebox table tr td {
+    background-color: transparent;
+  }
+  .tablebox table tr td span,
+  .tablebox table tr td span {
+    font-size: 0.25rem;
+  }
+
+body{
+    background: url(../images/bg.jpg) no-repeat top center;
+    background-size: 100% 100%;
+}
+// 标题、logo、时间
+header{
+    height: 1.5rem;
+    background: url(../images/t2.png) no-repeat;
+    background-size: 100% 100%;
+    display: flex;
+    .header1{
+        flex: 1;
+        width: 8rem;
+        background: url(../images/logo.png) no-repeat;
+    }
+    .header2{
+        flex: 1;
+        width: 8rem;
+        font-size: 0.6rem;
+        font-weight: 550;
+        color: #fff;
+        text-align: center;
+        line-height: 1rem;
+    }
+    .header3{
+        flex: 1;
+        width: 8rem;
+        text-align: right;
+        // line-height: 0.9375rem;
+        color: rgba(255, 255, 255, 0.7);
+        font-size: 0.3rem;
+        font-family: "electronicFont";
+    }
+}
+// 主体部分
+.mainbox{
+    flex-direction: row;
+    #top{
+        flex: 3;
+        height: 8rem;
+        display: flex;
+        #topLeft{
+            flex: 7;
+            width: 7rem;
+            flex-direction: row;
+            #warning{
+                flex: 1;
+                height: 4rem;
+                #warning1{
+                    height: 4rem;
+                    width: 7rem;
+                }
+            }
+            #connection{
+                flex: 1;
+                height: 4rem;
+                position: relative;
+                .tablebox {
+                    height: 3rem;
+                    width: 6.6rem;
+                    top:0.8rem;
+                    left: 0.2rem;
+                }
+            }
+        }
+        #topMid{
+            flex: 10;
+            width: 10rem;
+            #topMid1{
+                height: 8rem;
+                width: 10rem;
+                position: absolute;
+                #topMid11{
+                    height: 7.6rem;
+                    width: 9.5rem;
+                    margin-top: 0.2rem;
+                    margin-left: 0.2rem;
+                }
+                #topMid12{
+                    position: absolute;
+                    height: 1rem;
+                    width: 2rem;
+                    bottom: 0.5rem;
+                    left: 0.8rem;
+                    #topMid121{
+                        position: absolute;
+                        height: 0.8rem;
+                        width: 1.8rem;
+                        left: 0.1rem;
+                        top: 0.1rem;
+                        font-size: 0.2rem;
+                        font-weight: 800;
+                        color: #fff;
+                    }
+                }
+                #topMid13{
+                    position: absolute;
+                    height: 1rem;
+                    width: 2rem;
+                    bottom: 3.5rem;
+                    left: 1.2rem;
+                    #topMid131{
+                        position: absolute;
+                        height: 0.8rem;
+                        width: 1.8rem;
+                        left: 0.1rem;
+                        top: 0.1rem;
+                        font-size: 0.2rem;
+                        font-weight: 800;
+                        color: #fff;
+                    }
+                }
+                #topMid14{
+                    position: absolute;
+                    height: 1rem;
+                    width: 2rem;
+                    bottom: 4rem;
+                    right: 0.6rem;
+                    #topMid141{
+                        position: absolute;
+                        height: 0.8rem;
+                        width: 1.8rem;
+                        left: 0.1rem;
+                        top: 0.1rem;
+                        font-size: 0.2rem;
+                        font-weight: 800;
+                        color: #fff;
+                    }
+                }
+            }
+        }
+        #topRight{
+            flex: 7;
+            width: 7rem;
+            flex-direction: row;
+            #database{
+                flex: 1;
+                height: 4rem;
+                #database1{
+                    height: 4rem;
+                    width: 7rem;
+                    position: absolute;
+                    #database2{
+                        height: 3rem;
+                        width: 6.5rem;
+                        margin-left: 0.2rem;
+                        margin-top: 0.8rem;
+                    }
+                }
+            }
+            #archive{
+                flex: 1;
+                height: 4rem;
+                #archive1{
+                    height: 4rem;
+                    width: 7rem;
+                    position: absolute;
+                    #archive2{
+                        height: 3rem;
+                        width: 6.5rem;
+                        margin-left: 0.2rem;
+                        margin-top: 0.8rem;
+                    }
+                }
+            }
+        }
+    }
+    #down{
+        flex: 1;
+        height: 4rem;
+        display: flex;
+        #down1{
+            flex: 1;
+            width: 6rem;
+            #down11{
+                height: 4rem;
+                width: 6rem;
+                position: absolute;
+                #down111{
+                    height: 3rem;
+                    width: 5.5rem;
+                    margin-left: 0.2rem;
+                    margin-top: 0.8rem;
+                    flex-direction:row;
+                    #down1111{
+                        flex: 1;
+                        height: 1.5rem;
+                        display: flex;
+                        #down11111{
+                            flex: 1;
+                            width: 2.75rem;
+                        }
+                        #down11112{
+                            flex: 1;
+                            width: 2.75rem;
+                        }
+                    }
+                    #down1112{
+                        flex: 1;
+                        height: 1.5rem;
+                    }
+                }
+            }
+        }
+        #down2{
+            flex: 1;
+            width: 6rem;
+            #down22{
+                height: 4rem;
+                width: 6rem;
+                position: absolute;
+                #down222{
+                    height: 3rem;
+                    width: 5.5rem;
+                    margin-left: 0.2rem;
+                    margin-top: 0.8rem;
+                    flex-direction:row;
+                    #down2221{
+                        flex: 1;
+                        height: 1.5rem;
+                        display: flex;
+                        #down22211{
+                            flex: 1;
+                            width: 2.75rem;
+                        }
+                        #down22212{
+                            flex: 1;
+                            width: 2.75rem;
+                        }
+                    }
+                    #down2222{
+                        flex: 1;
+                        height: 1.5rem;
+                    }
+                }
+            }
+        }
+        #down3{
+            flex: 1;
+            width: 6rem;
+            #down33{
+                height: 4rem;
+                width: 6rem;
+                position: absolute;
+                #down333{
+                    height: 3rem;
+                    width: 5.5rem;
+                    margin-left: 0.2rem;
+                    margin-top: 0.8rem;
+                    flex-direction:row;
+                    #down3331{
+                        flex: 1;
+                        height: 1.5rem;
+                        display: flex;
+                        #down33311{
+                            flex: 1;
+                            width: 2.75rem;
+                        }
+                        #down33312{
+                            flex: 1;
+                            width: 2.75rem;
+                        }
+                    }
+                    #down3332{
+                        flex: 1;
+                        height: 1.5rem;
+                    }
+                }
+            }
+        }
+        #down4{
+            flex: 1;
+            width: 6rem;
+            #down44{
+                height: 4rem;
+                width: 6rem;
+                position: absolute;
+                #down444{
+                    height: 3rem;
+                    width: 5.5rem;
+                    margin-left: 0.2rem;
+                    margin-top: 0.8rem;
+                    flex-direction:row;
+                    #down4441{
+                        flex: 1;
+                        height: 1.5rem;
+                        display: flex;
+                        #down44411{
+                            flex: 1;
+                            width: 2.75rem;
+                        }
+                        #down44412{
+                            flex: 1;
+                            width: 2.75rem;
+                        }
+                    }
+                    #down4442{
+                        flex: 1;
+                        height: 1.5rem;
+                    }
+                }
+            }
+        }
+    }
+}

@@ -1,0 +1,70 @@
+weblogic
+
+查看domain的注册文件
+
+进入weblogic目录		cd /u01/app/mim/weblogic12c
+查看文件  	cat domain-registry.xml
+
+
+###删除domain
+domain的文件夹进行删除，domain的注册文件里的相关内容进行删除
+
+
+###安装jdk需要注意更改java.security
+
+cd /u01/app/mim/jdk1_8/jre/lib/security						
+cp java.security java.security_bak						
+vi java.security						
+查找rand						
+把securerandom.source=file:/dev/random
+更改为
+securerandom.source=file:/dev/./urandom				
+
+
+###安装weblogic swap空间不足
+
+安装weblogic需要1g的swap空间，如果swap空间不足，则临时添加：									
+exit								
+dd if=/dev/zero of=/swap bs=1M count=1024								
+mkswap /swap								
+swapon /swap	
+
+
+#注意
+weblogic的启动脚本，每个domain要分开启动。
+
+启动脚本:
+vi start_admin.sh
+
+#!/bin/bash
+if [ "`id -un`" != "weblogic" ];then
+echo "current user is not excutable user,please switch to weblogic"
+exit 1;
+else
+cd /u01/app/mim/domains/cms_domain/bin
+export USER_MEM_ARGS="-Xms4096m -Xmx4096m -XX:MetaspaceSize=2048m -XX:MaxMetaspaceSize=2048m"
+export GC_SET="-XX:+UseParallelGC -XX:+PrintGCDetails -XX:+PrintGCTimeStamps -verbose:gc -Xloggc:/u01/app/mim/logs/weblogic/admin_gc.log -XX:+HeapDumpOnOutOfMemoryError"
+nohup ./startWebLogic.sh >/u01/app/mim/logs/weblogic/admin.out 2>&1 &
+fi
+
+
+
+
+
+添加GC_SET
+
+cd /u01/app/mim/domains/cms_domain/bin/						
+cp startWebLogic.sh startWebLogic.sh.bak						
+vi startWebLogic.sh						
+	195行到202行			
+							
+if [ "${WLS_REDIRECT_LOG}" = "" ] ; then			
+echo "Starting WLS with line:"						
+echo "${JAVA_HOME}/bin/java ${JAVA_VM} ${MEM_ARGS} ${LAUNCH_ARGS} -Dweblogic.Name=${SERVER_NAME} -Djava.security.policy=${WLS_POLICY_FILE} ${JAVA_OPTIONS} ${GC_SET} ${PROXY_SETTINGS} ${SERVER_CLASS}"						
+${JAVA_HOME}/bin/java ${JAVA_VM} ${MEM_ARGS} ${LAUNCH_ARGS} -Dweblogic.Name=${SERVER_NAME} -Djava.security.policy=${WLS_POLICY_FILE} ${JAVA_OPTIONS} ${GC_SET} ${PROXY_SETTINGS} ${SERVER_CLASS}						
+else						
+echo "Redirecting output from WLS window to ${WLS_REDIRECT_LOG}"
+${JAVA_HOME}/bin/java ${JAVA_VM} ${MEM_ARGS} ${LAUNCH_ARGS} -Dweblogic.Name=${SERVER_NAME} -Djava.security.policy=${WLS_POLICY_FILE} ${JAVA_OPTIONS} ${GC_SET} ${PROXY_SETTINGS} ${SERVER_CLASS}  >"${WLS_REDIRECT_LOG}" 2>&1
+fi						
+
+

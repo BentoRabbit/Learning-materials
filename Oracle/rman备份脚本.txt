@@ -1,0 +1,54 @@
+source /home/oracle/.bash_profile
+export ORACLE_SID=orcl1
+export BACKUP_DIR=/nfs/backup
+export RMAN_SCRIPTS=$BACKUP_DIR/orcl/scripts
+export RMAN_BACKUPSETS=$BACKUP_DIR/orcl/backupsets
+export RMAN_LOG=$BACKUP_DIR/orcl/logs/rman_$ORACLE_SID.log
+
+echo ''>>$RMAN_LOG
+echo ''>>$RMAN_LOG
+echo ''>>$RMAN_LOG
+echo '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~' >>$RMAN_LOG
+echo '~                                                                          ~' >>$RMAN_LOG
+echo '~                     RMAN FULL BACKUP SCRIPTS VER1.0                      ~' >>$RMAN_LOG
+echo '~                                                                          ~' >>$RMAN_LOG
+echo '~        Provided and Supported by MEMA Software (ShangHai) Co.,Ltd        ~' >>$RMAN_LOG
+echo '~                         oracleservice@china.com                          ~' >>$RMAN_LOG
+echo '~                 Copyright 2005,MEMA. All rights reserved                 ~' >>$RMAN_LOG
+echo '~                                                                          ~' >>$RMAN_LOG
+echo '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~' >>$RMAN_LOG
+echo ''>>$RMAN_LOG
+echo 'Starting Full Database Backup at '`date +%Y-%m-%d:%H:%M:%S` >>$RMAN_LOG
+
+cd /u01/app/oracle/product/11.2.0.4/dbhome_1/bin
+./rman target / log $RMAN_LOG append <<EOF
+set echo on;
+run{
+allocate channel d2 type disk;
+allocate channel d3 type disk;
+CONFIGURE CHANNEL DEVICE TYPE DISK FORMAT '$RMAN_BACKUPSETS/$ORACLE_SID-%U.rman';
+CONFIGURE CONTROLFILE AUTOBACKUP ON;
+CONFIGURE CONTROLFILE AUTOBACKUP FORMAT FOR DEVICE TYPE DISK TO '$RMAN_BACKUPSETS/$ORACLE_SID-%F.ctl';
+CONFIGURE RETENTION POLICY TO REDUNDANCY 7;
+backup as compressed backupset database format '$RMAN_BACKUPSETS/$ORACLE_SID-%U.db'
+plus
+archivelog format '$RMAN_BACKUPSETS/$ORACLE_SID-%U.arc';
+crosscheck archivelog all;
+crosscheck backupset;
+delete noprompt obsolete device type disk;
+delete noprompt expired  archivelog all;
+delete noprompt obsolete;
+delete noprompt expired  backup;
+delete noprompt archivelog until time "sysdate-1";
+release channel d1;
+release channel d2;
+release channel d3;
+}
+list backup summary;
+list backup by file;
+exit;
+EOF
+
+echo ''>>$RMAN_LOG
+echo 'End Full Database Backup at '`date +%Y-%m-%d:%H:%M:%S` >>$RMAN_LOG
+echo ''>>$RMAN_LOG

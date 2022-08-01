@@ -1,0 +1,54 @@
+rem --------------------------------------------------------------------------------------------
+rem Backup Full Database scripts
+rem   - Oracle version > 11g 11204
+rem   - not need recovery repository
+rem   - can add to windows schedule to run automatic
+rem 2020/04/30
+rem Writed by even/ MEMA / oracleservice@china.com
+rem --------------------------------------------------------------------------------------------
+
+set ORACLE_SID=X3PU9
+set BACKUP_DIR=E:\backup
+set RMAN_SCRIPTS=%BACKUP_DIR%\scripts
+set RMAN_BACKUPSETS=%BACKUP_DIR%\backupsets
+set RMAN_LOG=%BACKUP_DIR%\logs\rman_%ORACLE_SID%_%DATE:~0,4%%DATE:~5,2%%DATE:~8,2%.log
+
+echo .  >>%RMAN_LOG%
+echo .  >>%RMAN_LOG%
+echo .  >>%RMAN_LOG%
+echo .  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ >>%RMAN_LOG%
+echo .  ~                                                                          ~ >>%RMAN_LOG%
+echo .  ~                     RMAN FULL BACKUP SCRIPTS VER2.0                      ~ >>%RMAN_LOG%
+echo .  ~                                                                          ~ >>%RMAN_LOG%
+echo .  ~        Provided and Supported by MEMA Software (ShangHai) Co.,Ltd        ~ >>%RMAN_LOG%
+echo .  ~                         oracleservice@china.com                          ~ >>%RMAN_LOG%
+echo .  ~                 Copyright 2005,MEMA. All rights reserved                 ~ >>%RMAN_LOG%
+echo .  ~                                                                          ~ >>%RMAN_LOG%
+echo .  ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ >>%RMAN_LOG%
+echo .  >>%RMAN_LOG%
+echo . Starting Full Database Backup at %date% %time% >>%RMAN_LOG%
+
+del %RMAN_SCRIPTS%\backup_full.rman
+
+echo set echo on; >>%RMAN_SCRIPTS%\backup_full.rman
+echo CONFIGURE DEFAULT DEVICE TYPE TO DISK; >>%RMAN_SCRIPTS%\backup_full.rman
+echo CONFIGURE DEVICE TYPE DISK PARALLELISM 1; >>%RMAN_SCRIPTS%\backup_full.rman
+echo CONFIGURE CHANNEL DEVICE TYPE DISK FORMAT '%RMAN_BACKUPSETS%\%ORACLE_SID%_%%U.rman' MAXPIECESIZE 2000M; >>%RMAN_SCRIPTS%\backup_full.rman
+echo CONFIGURE CONTROLFILE AUTOBACKUP ON; >>%RMAN_SCRIPTS%\backup_full.rman
+echo CONFIGURE CONTROLFILE AUTOBACKUP FORMAT FOR DEVICE TYPE DISK TO '%RMAN_BACKUPSETS%\%ORACLE_SID%_%%F.ctl'; >>%RMAN_SCRIPTS%\backup_full.rman
+echo CONFIGURE RETENTION POLICY TO REDUNDANCY 7; >>%RMAN_SCRIPTS%\backup_full.rman
+echo backup as compressed backupset database format '%RMAN_BACKUPSETS%\%ORACLE_SID%_%%U.db' >>%RMAN_SCRIPTS%\backup_full.rman
+echo plus >>%RMAN_SCRIPTS%\backup_full.rman
+echo archivelog format '%RMAN_BACKUPSETS%\%ORACLE_SID%_%%U.arc' delete input; >>%RMAN_SCRIPTS%\backup_full.rman
+echo delete noprompt obsolete; >>%RMAN_SCRIPTS%\backup_full.rman
+echo list backup summary; >>%RMAN_SCRIPTS%\backup_full.rman
+echo list backup by file; >>%RMAN_SCRIPTS%\backup_full.rman
+echo crosscheck archivelog all; >>%RMAN_SCRIPTS%\backup_full.rman
+echo crosscheck backupset; >>%RMAN_SCRIPTS%\backup_full.rman
+echo exit; >>%RMAN_SCRIPTS%\backup_full.rman
+
+rman target / cmdfile %RMAN_SCRIPTS%\backup_full.rman log %RMAN_LOG% append 
+
+echo . >>%RMAN_LOG%
+echo . End Full Database Backup at %date% %time% >>%RMAN_LOG%
+echo . >>%RMAN_LOG%

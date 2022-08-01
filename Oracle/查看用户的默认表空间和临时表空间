@@ -1,0 +1,7 @@
+查看用户的默认表空间和临时表空间
+
+COL USERNAME FORMAT A20
+COL DEFAULT_TABLESPACE FORMAT A20
+set pagesize 0
+
+select username,DEFAULT_TABLESPACE,TEMPORARY_TABLESPACE from dba_users where account_status='OPEN';

@@ -1,0 +1,11 @@
+查看进程数
+show parameter processes;
+
+目前使用的进程数
+select count(*) from v$process;
+
+查看哪一个进程占用的比较多
+select  b.MACHINE,b.PROGRAM , count(*) from v$process a, v$session b where a.ADDR =b.PADDR and  b.USERNAME is not null   group by  b.MACHINE  , b.PROGRAM order by count(*) ASC;
+
+DESC	--降序
+ASC	--升序

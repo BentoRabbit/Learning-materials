@@ -1,0 +1,198 @@
+1. 设置每行显示多少字符
+set linesize  300;
+
+2.设置每页显示多少条记录 
+set pagesize 30;
+
+3.用户名的切换
+如：conn oracle/oracle
+
+conn sys/Mema_1234 as sysdba(注意超级用户 在后面加as sysdba)
+
+4.在超级用户下查找普通用户的表是查不到的 必须这样查找  
+如:select * from scott.emp(普通用户下的emp表)
+
+5.查看当前是那个用户身份登录
+show user;
+
+6.查看有多少张表:
+select * from tab;(注意不同用户下的表是不同的)
+
+7.查看表的结构
+desc emp(emp为表名)
+
+8.取出重复的列(DISTINCT) 
+如: SELECT DISTINCT  JOB EMP(去掉job的重复的值)
+
+9.字符串的链接操作用:  ||
+
+10.查询有奖金的员工
+select* from emp where comm is not null;
+
+11.查询没有奖金的员工信息
+select * from emp where comm is null;
+
+12.两个条件以上就得用and 如查询工资大雨1500和有奖金的员工 
+select * from emp where sal>1500  and comm is not null;
+
+13.表示两个条件有一个满足就可就用:or 如查询工资大于1500或者没有奖金的员工信息
+select * from emp where sal>1500 or comm is not null;
+
+14.取反可以用not 如 查询员工工资不大于1500和有奖金的员工信息 如:
+select * from emp where not (sal>1500  or comm is not null);
+
+15.在什么什么之间用between----and----如查询工资在1500和3000之间的员工信息:
+select * from emp  where sal  between 1500 and 3000;
+
+16.查询员工编号是2323, 4555, 2222的员工具体信息: 如
+select * from emp where empno in(2323,4555,2222);
+
+17.模糊查询  like 一般结合"%"和"_"使用其中%:表示可以匹配任意长度的内容,"_"表示匹配一个长度放入内容  如:  查询员工姓名中第二哥字母是M的员工信息:
+select * from emp where ename LIKE '_M%';
+
+如姓名中包含M的员工  
+select * from emp where ename LIKE  '%M%';
+
+18.oracle中不等于有两种表示方式"<>"和"!="
+
+19.排序用order by {asc desc}其中asc 是升序排列 如果不写就默认按升序排列desc是按降序排列 排序语句放在sal语句的最后如: 按员工工资进行排序
+
+select * from emp order by sal asc(升序)
+
+select * from emp order by sal desc(降序)
+
+select * from emp where deptno='10' order by sal desc,hiredate asc;(查询部门10的员工工资的升序排列如果工资相等就按员工的入职时间排序)
+
+20.group by 用于对查询的结果进行分组统计: 显示每个部门的平均工资和最高工资  如:
+select avg(sal),max(sal) from emp group by deptno;
+
+21.Having  子句用于限制分组显示结果: 显示平均工资大于2000的的部门号和他的平均工资?
+如:select avg(sal), deptno from emp group by deptno having avg(sal)>2000;
+
+单行函数:
+
+1.小写变大写: upper 如 select * from emp where ename=upper('smith');
+
+讲一个字符串变为小写字母表示 如:  select  lower('HELLO WORLD') FROM DUAL;
+
+将单词的首字母变大写 用 INITCAP 如: SELECT INITCAP('HELLO WORLD') FROM DUAL;
+
+2.字符串的操作
+
+  Substr()截取字符串 length()字符串的长度 replace()替换字符串
+
+3.数值函数
+
+四舍五入: round();
+
+截断小数位:trunc();
+
+
+创建表空间 
+create tablespace test datafile ‘/u01/oracle/schooltbs.dbf’ size 10M autoextend on;
+
+删除表空间
+drop tablespace test[including contents and datafiles];
+
+查询表空间基本信息
+select *||tablespace_name from DBA_TABLESPACES;
+
+创建用户
+create user user01 identified by user01 default tablespace test temporary tablespace temp;
+
+更改用户
+alter user user01 identified by 123 default tablespace users;
+
+锁定用户
+alter user user01 account lock|unlock;
+
+删除用户
+drop user user01 cascade;--删除用户模式
+
+oracle数据库中的角色 
+connect,dba,select_catalog_role,delete_catalog_role,execute_catalog_role,exp_full_database,imp_full_database,resource
+
+授予连接服务器的角色 
+grant connect to user01;
+
+授予使用表空间的角色 
+grant resource to user01 with grant option;--该用户也有授权的权限
+
+授予操作表的权限 
+grant select,insert on user_tbl to test;--当前用户 
+grant delete,update on user_01.user_tbl to test;--系统管理员
+
+修改表的结构(alter)
+Alter table  表名 add(列的名称,列的类型);
+
+修改表的命令 
+--修改表名 
+alter table stu_table rename to stu_tbl;
+--修改列名
+alter table stu_tbl rename column stu_sex to sex;
+--添加新列
+alter table stu_tbl add (stu_age number);
+--删除列
+alter table stu_tbl drop(sex);
+--更改列的数据类型
+alter table stu_tbl modify(stu_sex varchar2(2));
+--添加约束
+alter table stu_tbl add constraint pk_stu_tbl primary key(id);
+
+利用现有的表创建表 
+create table stu_tbl_log as select id,stu_name,stu_age from stu_tbl;
+选择无重复的行
+select distinct stu_name from stu_tbl;
+插入来自其他表中的记录 
+insert into stu_tbl_log select id,stu_name,stu_age from stu_tbl;
+
+
+序列用于生成唯一，连续序号的对象。 
+创建语法： 
+create sequence user_id_seq start with 1000 increment by 1 maxvalue 2000 minvalue 1000 nocycle cache 1000;
+
+指定内存中预先分配的序号 访问序列： 
+select user_id_seq.currval from dual; select user_id-seq.nextval from dual;
+
+更改删除序列： alter sequence user_id_seq maxvalue 10000;
+
+不能修改其start with 值 drop sequence user_id_seq; 
+
+在Hibernate中访问序列：user_id_seq
+
+
+视图以经过定制的方式显示来自一个或多个表的数据 
+创建视图： 
+create or replace view user_tbl_view (vid,vname,vage) as select id,user_name,age from user_tbl [with check option]|[with read only]; 
+
+创建带有错误的视图： 
+create force view user_tbl_force_view as select * from user_table;
+
+此时user_table可以不存在 创建外联接视图： 
+create view user_stu_view as select u.id,u.user_name,u.password,s.ddress from user_tbl u,stu_tbl s where u.s_id(+)=s.id;
+-- 哪一方带有(+)，哪一方就是次要的 
+
+删除视图： drop user_stu_view;
+
+
+索引 用于提高SQL语句执行的性能 
+
+索引类型： 唯一索引，位图索引，组合索引，基于函数的索引，反向键索引
+
+创建标准索引： 
+create index user_id_index on user_tbl(id) tablespace schooltbs; 
+
+重建索引： 
+alter index user_id_index rebuild; 
+
+删除索引： drop index user_id_index;
+
+创建唯一索引： 
+create unique index user_id_index on user_tbl(id); 
+
+创建组合索引： create index name_pass_index on user_tbl(user_name,password); 
+
+创建反向键索引： create index user_id_index on user_tbl(id) reverse;
+
+
+

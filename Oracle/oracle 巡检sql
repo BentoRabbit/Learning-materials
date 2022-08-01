@@ -1,0 +1,131 @@
+巡检常用sql语句
+
+1. 查看表空间占用率
+SELECT a.tablespace_name,  a.total || 'M' total_space,  (a.total - b.free) || 'M' used_space,  
+to_char((a.total - b.free) / a.total * 100, '99.99') || '%' pct_free  
+FROM (SELECT tablespace_name, SUM(bytes) / 1024 / 1024 total  
+		FROM dba_data_files  
+		GROUP BY tablespace_name) a,  
+	(SELECT tablespace_name, SUM(bytes) / 1024 / 1024 free  
+		FROM dba_free_space  
+		GROUP BY tablespace_name) b  
+WHERE a.tablespace_name = b.tablespace_name;  
+
+2. 查看是否有锁表
+select object_name, s.sid, s.serial# 
+from v$locked_object o,v$session s,dba_objects c
+where o.session_id=s.sid and o.object_id=c.object_id;
+
+3. 查看是否有失效索引
+select index_name, table_name, tablespace_name, status, owner
+from dba_indexes
+where owner='WORKFLOW' and status <> 'VALID';
+
+4. 查看是否有失效约束
+select constraint_type,constraint_name,table_name,r_owner,r_constraint_name,status
+from dba_constraints where owner='WORKFLOW' and status <> 'ENABLED';
+
+5. 查看是否有失效触发器
+select trigger_name,table_name,status from dba_triggers
+where owner='WORKFLOW' and status <> 'ENABLED';
+
+6. 查找磁盘读写最多的SQL
+select * from (select sql_text, disk_reads "total disk",executions "total exec",
+				disk_reads / executions "disk/exec" from v$sql 
+				where executions > 0 and is_obsolete = 'N' ORDER BY 4 DESC)
+		where rownum<11;
+
+7. 使用率的查询(有无free状态的数据块)
+select count(*), status from v$bh group by status ; 
+
+8. 相关等待事件的查询(是否有相关等待事件) 
+select event,total_waits from v$system_event where event in ('free buffer waits');
+
+9. 当前大小
+select value/1024/1024 cache_size from v$parameter where name='db_cache_size';
+
+10.查共享池
+-- 如果命中率低于 90% 则需加大数据库参数 db_cache_size  
+SELECT NAME,
+	1 - (physical_reads / (db_block_gets + consistent_gets)) hit_ratio  
+FROM v$buffer_pool_statistics  
+WHERE db_block_gets + consistent_gets > 0;
+
+-- 如低于 95%，则需要调整应用程序使用绑定变量，或者调整数据库参数 shared pool 的大小
+SELECT SUM(pinhits) / SUM(pins) * 100 hit_radio FROM v$librarycache;  
+
+--共享SQL区的使用率,这个使用率应该在90％以上，否则需要增加共享池的大小  
+select(sum(pins-reloads))/sum(pins) "Library cache" from v$librarycache 
+
+--其中: &TSP_IN_M是你的总的共享池的SIZE(M)  
+SELECT (1 - round(bytes / (&tsp_in_m * 1024 * 1024), 2)) * 100 || '%'  
+FROM v$sgastat  
+WHERE NAME = 'free memory' AND pool = 'shared pool';
+
+--查询空闲的共享池内存  
+SELECT *  FROM v$sgastat  WHERE NAME = 'free memory' AND pool = 'shared pool'; 
+
+--共享池内存使用率，应该稳定在75%-90%间，太小浪费内存，太大则内存不足
+
+SELECT NAME,physical_reads,db_block_gets,consistent_gets,
+1 - (physical_reads / (db_block_gets + consistent_gets)) "Hit Ratio"
+FROM v$buffer_pool_statistics  
+WHERE NAME = 'DEFAULT';  
+
+---通常应在90%以上，否则，需要调整,加大DB_CACHE_SIZE
+
+11. 查找排序最多的SQL
+SELECT HASH_VALUE, SQL_TEXT, SORTS, EXECUTIONS
+FROM V$SQLAREA ORDER BY SORTS DESC;  
+
+12. 查找工作量最大的SQL(实际上也是按磁盘读写来排序的)
+SELECT substr(to_char(s.pct, '99.00'), 2) || '%' load,  
+       s.executions executes,  
+       p.sql_text  
+FROM (SELECT address,  
+             disk_reads,  
+             executions,  
+             pct,  
+             rank() over(ORDER BY disk_reads DESC) ranking  
+      FROM (SELECT address,  
+                   disk_reads,  
+                   executions,  
+                   100 * ratio_to_report(disk_reads) over() pct  
+            FROM sys.v_$sql  
+            WHERE command_type != 47)  
+      WHERE disk_reads > 50 * executions) s, 
+sys.v_$sqltext p  
+WHERE s.ranking <= 5 AND p.address = s.address  
+ORDER BY 1, s.address, p.piece;  
+
+
+13. 缓冲区命中率的查询(是否低于90%)
+select round((1 - sum(decode(name,'physical reads',value,0)) /
+(sum(decode(name,'db block gets',value,0)) + sum(decode(name,'consistent gets',value,0))) ),4) *100 || '%' chitrati 
+from v$sysstat;
+
+14. top等待事件分析(Db file scatered read的比率是否大) 
+select event ,total_waits,suml 
+from 
+(select event,total_waits,round(total_waits/sumt*100,2)||'%' suml 
+	from (select event,total_waits from v$system_event ), (select sum(total_waits) sumt from v$system_event) 
+	order by total_waits desc) 
+where rownum<6 and event not like 'rdbms%' and event not like 'pmon%' and event not like 'SQL*Net%' 
+and event not like 'smon%'; 
+
+15. db_cache_advice建议值（9i后的新特性,可以根据他更好的调整cache_size）
+select block_size,size_for_estimate,size_factor,estd_physical_reads from v$db_cache_advice; 
+
+
+1.sql_trace跟踪session.用tkprof 分别输出磁盘读,逻辑读,运行时间长的sql进行优化.这些高消耗的sql一般都伴随着全表扫描. 
+2.statspack分析.在系统繁忙时期进行时间点的统计分析,产看TOP事件是否有Db file scatered read.并查看TOP sql语句是否存在问题等. 
+
+在硬件允许的情况下，尽量增大db_cache_size 减少磁盘读，但并不是越大越好，一定要根据自己的库数据量的程度来调节，因为大的db_cache_size同样会增大数据库管理的开销
+
+索引是在不需要改变程序的情况下,对数据库性能，sql语句提高的最实用的方法. 
+
+空闲缓冲区等待说明进程找不到空闲缓冲区，并通过写出灰缓冲区，来加速数据库写入器生成空闲缓冲区，当DBWn将块写入磁盘后，灰数据缓冲区将被释放，以便重新使用.产生这种原因主要是: 
+1，DBWn可能跟不上写入灰缓冲区：i/0系统较慢，尽量将文件均匀的分布于所有设备
+2，缓冲区过小或过大
+3，可以增加db_writer_processes数量
+4,可能有很大的一个事物，或者连续的大事物 

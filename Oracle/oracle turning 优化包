@@ -1,0 +1,28 @@
+oracle turning 优化包
+
+生成快照
+begin
+dbms_workload_repository.create_snapshot();
+end;
+/
+
+导出awrrpt
+@?/rdbms/admin/awrrpt
+
+Oracle自动调优包
+set linesize 5000;
+set longchunksize 1000;
+set pagesize 0;
+set long 999999999;
+
+
+VARIABLE tuning_task VARCHAR2(30)
+BEGIN    
+ :tuning_task := dbms_sqltune.create_tuning_task(sql_id => '4m8wauyyx425u');
+ dbms_sqltune.execute_tuning_task(:tuning_task);
+END;
+/
+
+print tuning_task
+
+SELECT dbms_sqltune.report_tuning_task('TASK_72511') FROM dual;

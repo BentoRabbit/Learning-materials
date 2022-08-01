@@ -1,0 +1,11 @@
+查看服务器容量
+
+su - grid
+asmcmd
+
+ASMCMD> lsdg
+
+State    Type    Rebal  Sector  Logical_Sector  Block       AU  Total_MB  Free_MB  Req_mir_free_MB  Usable_file_MB  Offline_disks  Voting_files  Name
+MOUNTED  NORMAL  N         512             512   4096  4194304  12209920  7107884          2441984         2332950              0             Y  DATA/
+MOUNTED  NORMAL  N         512             512   4096  4194304   3051520  1789424           610304          589560              0             N  RECO/
+MOUNTED  HIGH    N         512             512   4096  4194304   3051520  2203132           762880          480084              0             N  REDO/

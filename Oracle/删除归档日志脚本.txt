@@ -1,0 +1,43 @@
+#--------------------------------------------------------------------------------------------
+# Backup Full Database scripts
+#   - Oracle version > 11g
+#   - not need recovery repository
+#   - can add to root crontab as ' su - oracle -c backup_full.sh '
+# 2020/07/20
+# Writed by  / MEMA / zhengrong.zhao@mema.com.cn 
+#--------------------------------------------------------------------------------------------
+
+
+export ORACLE_SID=cypc2
+export BACKUP_DIR=/RMAN2/orabackup
+export RMAN_SCRIPTS=$BACKUP_DIR/scripts
+export RMAN_BACKUPSETS=$BACKUP_DIR/backupsets
+export RMAN_LOG=$BACKUP_DIR/logs/rman_$ORACLE_SID.log
+
+
+TODAY=`date +%Y%m%d%H%M`;
+
+echo ''>>$RMAN_LOG
+echo ''>>$RMAN_LOG
+echo ''>>$RMAN_LOG
+echo '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~' >>$RMAN_LOG
+echo '~                                                                          ~' >>$RMAN_LOG
+echo '~                     RMAN FULL BACKUP SCRIPTS VER1.0                      ~' >>$RMAN_LOG
+echo '~                                                                          ~' >>$RMAN_LOG
+echo '~        Provided and Supported by MEMA Software (ShangHai) Co.,Ltd        ~' >>$RMAN_LOG
+echo '~                         oracleservice@china.com                          ~' >>$RMAN_LOG
+echo '~                 Copyright 2005,MEMA. All rights reserved                 ~' >>$RMAN_LOG
+echo '~                                                                          ~' >>$RMAN_LOG
+echo '~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~' >>$RMAN_LOG
+echo ''>>$RMAN_LOG
+echo 'Starting Archive Backup at '`date +%Y-%m-%d:%H:%M:%S` >>$RMAN_LOG
+
+rman target / log $RMAN_LOG append <<EOF
+set echo on;
+delete noprompt force archivelog until time 'sysdate-7';
+exit;
+EOF
+
+echo ''>>$RMAN_LOG
+echo 'End Archive Backup at '`date +%Y-%m-%d:%H:%M:%S` >>$RMAN_LOG
+echo ''>>$RMAN_LOG

@@ -1,0 +1,17 @@
+01、查看当前open用户
+
+select username,account_status,expiry_date,profile from dba_users;
+
+02、查看目前的密码过期策略
+
+select * from dba_profiles s where s.profile='DEFAULT' and resource_name='PASSWORD_LIFE_TIME';
+
+03、修改密码过期策略
+
+alter profile default limit password_life_time unlimited;
+
+04、过期的账户，重置密码后期不会再过期
+
+$sqlplus / as sysdba
+
+alter user smsc identified by <原来的密码> ----不用换新密码
